@@ -1,9 +1,19 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "muj-turnstile-projekt",
-  "pages_build_output_dir": "./dist",
+  "name": "vars",
+  "main": "index.js",
+  "compatibility_date": "2026-01-06",
+
   "vars": {
-    "TURNSTILE_SITE_KEY": "1x00000000000000000000AA",
-    "TURNSTILE_SECRET_KEY": "1x00000000000000000000000000000000"
+    "SITE_KEY": "0x4AAAAAACGAgDV7xcFq9e8m",
+    "SECRET_TOKEN": "0x4AAAAAACGAgHFothta7mM0IFF7333ZU4w"
+  },
+
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    }
   }
 }
