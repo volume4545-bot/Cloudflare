@@ -1,11 +1,30 @@
-export default {
-  fetch(request, env) {
-    console.log("Worker běží, token:", env.0x4AAAAAACGAgHFothta7mM0IFF7333ZU4w);
-    console.log("Worker běží, site key:", env.0x4AAAAAACGAgDV7xcFq9e8m);
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <title>Test Turnstile</title>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+    <form id="my-form">
+        <div class="cf-turnstile" data-sitekey="1x00000000000000000000AA"></div>
+        <button type="submit">Odeslat k ověření</button>
+    </form>
 
-    return new Response(
-      `Token: ${env.SECRET_TOKEN ? "OK" : "chybí"}, Site key: ${env.SITE_KEY ? "OK" : "chybí"}`
-    );
-  }
-};
-
+    <script>
+        const form = document.getElementById('my-form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            
+            // Odeslání tokenu na náš backend (Pages Function)
+            const response = await fetch('/api/verify', {
+                method: 'POST',
+                body: formData
+            });
+            
+            const outcome = await response.json();
+            alert(outcome.success ? 'Ověření proběhlo OK!' : 'Chyba v ověření');
+        };
+    </script>
+</body>
+</html>
