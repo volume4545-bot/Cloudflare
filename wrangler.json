@@ -1,4 +1,3 @@
-// Ukázka ve tvém Workeru (index.js)
 const token = formData.get('cf-turnstile-response');
 const secretKey = '1x00000000000000000000000000000000'; // Dummy secret
 
