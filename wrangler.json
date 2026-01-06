@@ -2,18 +2,11 @@
   "name": "vars",
   "main": "index.js",
   "compatibility_date": "2026-01-06",
-
   "vars": {
-    "SITE_KEY": "0x4AAAAAACGAgDV7xcFq9e8m",
-    "SECRET_TOKEN": "0x4AAAAAACGAgHFothta7mM0IFF7333ZU4w"
+    "SITE_KEY": "tvoje_testovaci_site_key",
+    "SECRET_TOKEN": "testovaci_token"
   },
-
   "observability": {
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "invocation_logs": true,
-      "persist": true
-    }
+    "logs": { "enabled": true, "head_sampling_rate": 1, "invocation_logs": true, "persist": true }
   }
 }
