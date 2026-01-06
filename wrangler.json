@@ -1,5 +1,14 @@
 {
-  "name": "cloudflare",
+  "name": "vars",
+  "main": "index.js",
   "compatibility_date": "2026-01-06",
-  "main": "index.js"
+
+  "observability": {
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "invocation_logs": true,
+      "persist": true
+    }
+  }
 }
