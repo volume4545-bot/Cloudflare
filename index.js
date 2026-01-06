@@ -1,10 +1,31 @@
 export default {
-  fetch(request, env) {
-    console.log("Worker běží, token:", env.SECRET_TOKEN);
-    console.log("Worker běží, site key:", env.SITE_KEY);
+  async fetch(request, env) {
+    try {
+      // Použití tokenu
+      const res = await fetch("https://httpbin.org/bearer", {
+        headers: {
+          "Authorization": `Bearer ${env.SECRET_TOKEN}`
+        }
+      });
 
-    return new Response(
-      `Token: ${env.SECRET_TOKEN ? "OK" : "chybí"}, Site key: ${env.SITE_KEY ? "OK" : "chybí"}`
-    );
+      const data = await res.json();
+
+      // Vracíme site key a odpověď z API
+      const body = {
+        siteKey: env.SITE_KEY,
+        tokenUsed: env.SECRET_TOKEN ? true : false,
+        apiResponse: data
+      };
+
+      // Logujeme do Cloudflare Live logs
+      console.log("API volání úspěšné:", data);
+
+      return new Response(JSON.stringify(body, null, 2), {
+        headers: { "Content-Type": "application/json" }
+      });
+    } catch (e) {
+      console.log("Chyba při volání API:", e.message);
+      return new Response("Chyba při volání API: " + e.message, { status: 500 });
+    }
   }
 };
