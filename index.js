@@ -1,5 +1,6 @@
 export default {
-  fetch(request) {
-    return new Response("Hello from Cloudflare Worker!");
+  fetch(req) {
+    console.log("PING", new Date().toISOString());
+    return new Response("OK");
   }
 };
