@@ -1,31 +1,39 @@
 export default {
-  async fetch(request, env) {
-    try {
-      // Použití tokenu
-      const res = await fetch("https://httpbin.org/bearer", {
-        headers: {
-          "Authorization": `Bearer ${env.SECRET_TOKEN}`
-        }
-      });
+  fetch(request, env) {
+    return new Response(`<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Turnstile test</title>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    pre { background: #f5f5f5; padding: 1rem; word-break: break-all; }
+  </style>
+</head>
+<body>
 
-      const data = await res.json();
+  <h1>Cloudflare Turnstile – Worker test</h1>
 
-      // Vracíme site key a odpověď z API
-      const body = {
-        siteKey: env.SITE_KEY,
-        tokenUsed: env.SECRET_TOKEN ? true : false,
-        apiResponse: data
-      };
+  <div
+    class="cf-turnstile"
+    data-sitekey="0x4AAAAAACGAgDV7xcFq9e8m"
+    data-callback="onTurnstileSuccess">
+  </div>
 
-      // Logujeme do Cloudflare Live logs
-      console.log("API volání úspěšné:", data);
+  <h3>Token:</h3>
+  <pre id="token">čekám…</pre>
 
-      return new Response(JSON.stringify(body, null, 2), {
-        headers: { "Content-Type": "application/json" }
-      });
-    } catch (e) {
-      console.log("Chyba při volání API:", e.message);
-      return new Response("Chyba při volání API: " + e.message, { status: 500 });
+  <script>
+    function onTurnstileSuccess(token) {
+      console.log("Turnstile token:", token);
+      document.getElementById("token").textContent = token;
     }
+  </script>
+
+</body>
+</html>`, {
+      headers: { "Content-Type": "text/html; charset=utf-8" }
+    });
   }
 };
