@@ -1,19 +1,17 @@
-{
-  "name": "vars",
-  "main": "index.js",
-  "compatibility_date": "2026-01-06",
+// Ukázka ve tvém Workeru (index.js)
+const token = formData.get('cf-turnstile-response');
+const secretKey = '1x00000000000000000000000000000000'; // Dummy secret
 
-  "vars": {
-    "SITE_KEY": "tvoje_testovaci_site_key",
-    "SECRET_TOKEN": "testovaci_token"
-  },
+const verification = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+    method: 'POST',
+    body: JSON.stringify({
+        secret: secretKey,
+        response: token
+    }),
+    headers: { 'Content-Type': 'application/json' }
+});
 
-  "observability": {
-    "logs": {
-      "enabled": true,
-      "head_sampling_rate": 1,
-      "invocation_logs": true,
-      "persist": true
-    }
-  }
+const result = await verification.json();
+if (result.success) {
+    // Test úspěšný!
 }
